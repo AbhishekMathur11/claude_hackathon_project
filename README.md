@@ -13,7 +13,10 @@ a pre-written opening message to someone who already made that exact jump.
 
 ## Run it
 
-Two options, both fine:
+For immediate demo: https://visionary-crumble-292c4d.netlify.app/
+
+
+For local deployment, there are two options, both fine:
 
 ```bash
 # 1. Just open it
