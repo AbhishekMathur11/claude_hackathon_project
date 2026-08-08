@@ -214,7 +214,7 @@ function roadmapToText(plan) {
     lines.push('');
   });
 
-  lines.push('Free walk-in help in SF: https://www.sf.gov/departments/office-economic-and-workforce-development/techsf');
+  lines.push('Free walk-in help in SF: https://www.sf.gov/techsf');
   return lines.join('\n');
 }
 

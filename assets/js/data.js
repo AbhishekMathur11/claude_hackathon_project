@@ -38,7 +38,7 @@ const ORIGINS = [
         pct: 74,
         why: 'De-escalating a frustrated customer transfers directly to reviewing chatbot escalations that went wrong.',
         tags: ['Hybrid', 'SF teams hiring'],
-        link: 'https://www.sf.gov/find-job-through-jobsnow'
+        link: 'https://sfhsa.org/services/jobs-money/jobs-now'
       }
     ]
   },
@@ -61,7 +61,7 @@ const ORIGINS = [
         pct: 70,
         why: 'AI mapping tools are wrong constantly. They need humans who know the real city to ground-truth them.',
         tags: ['SF-local', 'Paid per task'],
-        link: 'https://www.sf.gov/find-job-through-jobsnow'
+        link: 'https://sfhsa.org/services/jobs-money/jobs-now'
       }
     ]
   },
@@ -77,7 +77,7 @@ const ORIGINS = [
         pct: 76,
         why: 'You know every single way an order can go wrong. That knowledge is the training data an AI kiosk does not have.',
         tags: ['Local', 'On-site'],
-        link: 'https://www.sf.gov/departments/office-economic-and-workforce-development/techsf'
+        link: 'https://www.sf.gov/techsf'
       },
       {
         role: 'AI Data Quality Rater',
@@ -222,7 +222,7 @@ const ORIGINS = [
         pct: 70,
         why: 'You explain bureaucratic systems to overwhelmed people all day. Same skill, new subject matter.',
         tags: ['Local', 'Community-facing'],
-        link: 'https://www.sf.gov/departments/office-economic-and-workforce-development/techsf'
+        link: 'https://www.sf.gov/techsf'
       }
     ]
   }
@@ -344,9 +344,9 @@ const BRIEFING = [
     title: 'Talk to a real person, not a website.',
     body: 'Walk-in help in San Francisco. You do not need an appointment or a laptop.',
     links: [
-      { label: 'TechSF', href: 'https://www.sf.gov/departments/office-economic-and-workforce-development/techsf' },
+      { label: 'TechSF', href: 'https://www.sf.gov/techsf' },
       { label: 'Code Tenderloin', href: 'https://www.codetenderloin.org' },
-      { label: 'SF JobsNow', href: 'https://www.sf.gov/find-job-through-jobsnow' }
+      { label: 'SF JobsNOW!', href: 'https://sfhsa.org/services/jobs-money/jobs-now' }
     ]
   }
 ];
@@ -437,7 +437,7 @@ const ROADMAP_WEEKS = [
     },
     shared: [
       { mins: 45, text: 'Use a free assistant every day this week for one real task. Fluency comes from repetition, not reading.', link: 'https://claude.ai', linkLabel: 'Claude (free tier)' },
-      { mins: 60, text: 'Walk into TechSF and say you are switching into AI-adjacent work. No appointment needed.', link: 'https://www.sf.gov/departments/office-economic-and-workforce-development/techsf', linkLabel: 'TechSF' },
+      { mins: 60, text: 'Walk into TechSF and say you are switching into AI-adjacent work. No appointment needed.', link: 'https://www.sf.gov/techsf', linkLabel: 'TechSF' },
       { mins: 30, text: 'Browse ten real job postings in this track and copy the words they repeat. Those words go in your profile.', li: 'jobs' }
     ]
   },
@@ -471,7 +471,7 @@ const ROADMAP_WEEKS = [
     },
     shared: [
       { mins: 45, text: 'Post publicly about what you built in week 3. Not a job plea — just the thing you made.', li: 'post' },
-      { mins: 45, text: 'Apply to three roles on the SF JobsNow board. Local hiring managers actually read it.', link: 'https://www.sf.gov/find-job-through-jobsnow', linkLabel: 'SF JobsNow' },
+      { mins: 45, text: 'Sign up for SF JobsNOW! — the city places people directly into paid roles with local employers.', link: 'https://sfhsa.org/services/jobs-money/jobs-now', linkLabel: 'SF JobsNOW!' },
       { mins: 30, text: 'Send your week-3 artifact to the person you messaged in week 3 and ask for one piece of feedback.', tab: 'assembly' }
     ]
   }
