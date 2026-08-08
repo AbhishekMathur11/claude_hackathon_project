@@ -134,8 +134,7 @@ nice-to-have:
 
 ## License / credits
 
-Built at a hackathon. Content and code are original; the aesthetic is a
-generic superhero-HUD homage and uses no trademarked names, logos, or
+Built at a hackathon. Content and code are original; the aesthetic uses no trademarked names, logos, or
 characters. External links point to free public resources
 (Elements of AI, Google AI Essentials, TechSF, Code Tenderloin, SF JobsNow,
 Outlier, Remotasks, Prolific, Hack the Hood, BAVC).
