@@ -40,7 +40,7 @@ There is nothing to install and nothing to compile.
 
 | Tab | Problem it answers | What it actually does |
 |---|---|---|
-| ① **Origin Scan** | Job displacement | Local keyword engine maps plain-English work descriptions onto 9 origins → real AI-adjacent roles with honest reasons and live links |
+| ① **Origin Scan** | Job displacement | Local keyword engine maps plain-English work descriptions onto 15 origins → real AI-adjacent roles with honest reasons and live links |
 | ② **The Assembly** | Community support | Searchable, LinkedIn-style directory of people who made the same jump (filter by track, deep-link to real LinkedIn people/job searches), plus a distress beacon with threaded replies and its own search |
 | ③ **Monday Briefing** | Representation / access | A four-week roadmap compiler: pick origin, track, hours/week and device, get a tailored plan with a real free link on every task, persistent tick-boxes, and a clean printout |
 

@@ -479,3 +479,241 @@ const ROADMAP_WEEKS = [
 
 /* Tasks kept per week, by how many hours a week the user actually has. */
 const HOURS_TO_TASKS = { '2': 2, '5': 3, '10': 4 };
+
+/* =============================================================================
+   TECH ORIGINS — the call is coming from inside the house
+
+   The first nine origins are people whose work AI is arriving at from outside.
+   These six are people already inside tech whose specific rung is being
+   automated away: junior SWEs, manual QA, tier-1 IT, dashboard analysts,
+   line-side robotics techs, and doc writers.
+
+   Appended rather than inlined above so the two groups stay legible. Everything
+   downstream — the scanner, the dropdown, the roster filter, the roadmap — reads
+   these arrays at runtime, so nothing else needs to change.
+   ========================================================================== */
+
+ORIGINS.push(
+  {
+    id: 'swe',
+    from: 'Software Engineer / Web Developer',
+    codename: 'THE BUILDER',
+    powers: ['Systems decomposition', 'Debugging from symptoms', 'Knowing when output is wrong'],
+    keywords: ['software', 'engineer', 'developer', 'programmer', 'coding', 'code', 'javascript', 'python', 'frontend', 'backend', 'full stack', 'react', 'api', 'web developer'],
+    matches: [
+      {
+        role: 'AI Evaluation Engineer',
+        pct: 86,
+        why: 'Writing tests for code is one step from writing evals for models — and evals are the bottleneck on every AI team right now.',
+        tags: ['Remote', 'High demand', 'Best-paid pivot'],
+        link: 'https://huggingface.co'
+      },
+      {
+        role: 'AI Application Engineer',
+        pct: 81,
+        why: 'The scarce skill is no longer writing the function, it is designing the system around a model that is wrong 5% of the time. You already build for failure.',
+        tags: ['Remote', 'SF-dense'],
+        link: 'https://developers.google.com/machine-learning/crash-course'
+      }
+    ]
+  },
+  {
+    id: 'qa',
+    from: 'QA / Manual Software Tester',
+    codename: 'THE BREAKER',
+    powers: ['Adversarial thinking', 'Reproducible reporting', 'Finding the unhappy path'],
+    keywords: ['qa', 'quality assurance', 'tester', 'testing', 'manual testing', 'test cases', 'bug', 'bugs', 'regression', 'sdet'],
+    matches: [
+      {
+        role: 'AI Red Teamer',
+        pct: 88,
+        why: 'Your entire job has been finding the input that breaks the thing. That is now a named, well-paid role at every model company.',
+        tags: ['Remote', 'Hot market'],
+        link: 'https://www.prolific.com'
+      },
+      {
+        role: 'Model Evaluation Specialist',
+        pct: 79,
+        why: 'Manual test scripts are being automated. Judging whether a model answer is actually good is not, and it needs exactly your rigour.',
+        tags: ['Remote', 'Entry-friendly'],
+        link: 'https://outlier.ai'
+      }
+    ]
+  },
+  {
+    id: 'itsupport',
+    from: 'IT Support / Helpdesk',
+    codename: 'THE FIRST LINE',
+    powers: ['Diagnosis from vague reports', 'Patience under pressure', 'Knowing what actually breaks'],
+    keywords: ['it support', 'helpdesk', 'help desk', 'technician', 'tier 1', 'troubleshooting', 'sysadmin', 'desktop support', 'ticket', 'tickets'],
+    matches: [
+      {
+        role: 'AI Deployment & Support Engineer',
+        pct: 82,
+        why: 'Tier-1 tickets are being deflected by bots. Somebody has to run, monitor and fix those bots — and know when to pull a human back in.',
+        tags: ['Hybrid', 'SF teams hiring'],
+        link: 'https://grow.google'
+      },
+      {
+        role: 'Internal AI Tools Champion',
+        pct: 74,
+        why: 'You already teach an entire office to use software they resent. That is the whole job of AI adoption inside a company.',
+        tags: ['On-site', 'Promotable'],
+        link: 'https://www.sf.gov/techsf'
+      }
+    ]
+  },
+  {
+    id: 'analyst',
+    from: 'Data Analyst / BI Reporting',
+    codename: 'THE DASHBOARD',
+    powers: ['Question framing', 'Spotting bad numbers', 'Explaining findings to non-experts'],
+    keywords: ['analyst', 'data analyst', 'business intelligence', 'sql', 'dashboard', 'dashboards', 'tableau', 'reporting', 'excel', 'spreadsheets', 'metrics'],
+    matches: [
+      {
+        role: 'AI Evaluation Data Scientist',
+        pct: 84,
+        why: 'Writing the SQL is the part that got automated. Deciding which number would actually settle the argument did not.',
+        tags: ['Remote', 'High demand'],
+        link: 'https://www.kaggle.com/learn'
+      },
+      {
+        role: 'AI Product Analyst',
+        pct: 76,
+        why: 'AI products fail on measurement, not on modelling. Teams need someone who can say what "working" means in numbers.',
+        tags: ['Hybrid', 'SF-dense'],
+        link: 'https://developers.google.com/machine-learning/crash-course'
+      }
+    ]
+  },
+  {
+    id: 'robotics',
+    from: 'Robotics / Manufacturing Technician',
+    codename: 'THE HANDS',
+    powers: ['Physical intuition', 'Failure diagnosis in the real world', 'Safety judgment'],
+    keywords: ['robotics', 'robot', 'robots', 'manufacturing', 'machinist', 'automation', 'plc', 'mechatronics', 'assembly line', 'maintenance', 'cnc', 'warehouse'],
+    matches: [
+      {
+        role: 'Robot Data Collection Specialist',
+        pct: 83,
+        why: 'Every robotics-foundation-model team is starving for real-world demonstration data, and it has to be collected by someone who knows the machine.',
+        tags: ['On-site', 'Bay Area labs'],
+        link: 'https://huggingface.co'
+      },
+      {
+        role: 'Teleoperation & Safety Operator',
+        pct: 77,
+        why: 'Autonomous systems still need a human who can take the controls and knows what "about to go wrong" feels like.',
+        tags: ['On-site', 'Shift work', 'Growing fast'],
+        link: 'https://sfhsa.org/services/jobs-money/jobs-now'
+      }
+    ]
+  },
+  {
+    id: 'techwriter',
+    from: 'Technical Writer / Documentation',
+    codename: 'THE MANUAL',
+    powers: ['Precision under ambiguity', 'Audience modelling', 'Structuring the unstructured'],
+    keywords: ['technical writer', 'technical writing', 'documentation', 'docs', 'copywriter', 'content writer', 'editor', 'style guide', 'knowledge base'],
+    matches: [
+      {
+        role: 'AI Output Editor & Style Lead',
+        pct: 80,
+        why: 'First drafts are free now. Deciding what is accurate, on-brand and safe to publish is the job that survived — and it pays more.',
+        tags: ['Remote', 'Flexible'],
+        link: 'https://www.prolific.com'
+      },
+      {
+        role: 'Prompt & Guideline Author',
+        pct: 78,
+        why: 'Annotation guidelines and system prompts are technical documentation for a reader that takes everything literally. That is your specialty.',
+        tags: ['Remote', 'Portfolio-friendly'],
+        link: 'https://outlier.ai'
+      }
+    ]
+  }
+);
+
+ALLIES.push(
+  {
+    name: 'S. Whitfield',
+    codename: 'THE REBUILDER',
+    from: 'Ex-frontend dev → AI Evaluation Engineer',
+    color: '#00f0ff',
+    originIds: ['swe'],
+    quote: 'My whole team got cut because the boilerplate I wrote is free now. The eval work I moved into is the part nobody has figured out how to automate.',
+    intro: "Hi S. — I'm a developer and C.O.R.E. matched me toward AI evaluation engineering. Could I ask how you made that pivot without a research background?"
+  },
+  {
+    name: 'P. Adeyemi',
+    codename: 'THE BREAKER',
+    from: 'Ex-manual QA → AI Red Teamer',
+    color: '#e23636',
+    originIds: ['qa'],
+    quote: 'Twelve years of being told manual testing was a dead end. Turns out being professionally suspicious is the most transferable thing I own.',
+    intro: "Hi P. — I come from manual QA and C.O.R.E. matched me toward red teaming. Would you have 15 minutes to talk about how you got your first role?"
+  },
+  {
+    name: 'K. Nowak',
+    codename: 'THE UPTIME',
+    from: 'Ex-helpdesk → AI Deployment Engineer',
+    color: '#38ff9c',
+    originIds: ['itsupport'],
+    quote: 'The chatbot replaced my ticket queue. Then somebody had to babysit the chatbot, and I was the only one who knew what users actually ask.',
+    intro: "Hi K. — I work in IT support and C.O.R.E. matched me toward AI deployment work. How did you position the helpdesk experience?"
+  },
+  {
+    name: 'H. Vasquez',
+    codename: 'THE MEASURE',
+    from: 'Ex-BI analyst → AI Evaluation Data Scientist',
+    color: '#ffb627',
+    originIds: ['analyst'],
+    quote: 'I stopped competing on writing queries the moment a model could write them faster. I compete on knowing which question is worth asking.',
+    intro: "Hi H. — I'm a data analyst and C.O.R.E. matched me toward AI evaluation. Would you be open to a short conversation about the transition?"
+  },
+  {
+    name: 'B. Osei',
+    codename: 'THE HANDS',
+    from: 'Ex-line technician → Robot Data Specialist',
+    color: '#ff8a3d',
+    originIds: ['robotics'],
+    quote: 'They had PhDs who could train the model and nobody who could tell them why the gripper kept failing on Tuesdays. That was me.',
+    intro: "Hi B. — I work in robotics maintenance and C.O.R.E. matched me toward robot data collection. Could I ask how you found that role?"
+  },
+  {
+    name: 'N. Farah',
+    codename: 'THE MANUAL',
+    from: 'Ex-technical writer → AI Output Editor',
+    color: '#ff3d8a',
+    originIds: ['techwriter'],
+    quote: 'I was terrified generated text would end me. I now get paid more to decide which generated text is allowed to ship.',
+    intro: "Hi N. — I'm a technical writer and C.O.R.E. matched me toward AI output editing. How did you show the judgment side of the work in an application?"
+  }
+);
+
+/* A fifth destination for people already inside tech. */
+TRACKS.push({
+  id: 'build',
+  name: 'AI Engineering & Evaluation',
+  blurb: 'Building and stress-testing the systems themselves. The rung above the one that got automated — closest jump if you already work in tech.',
+  liPeople: 'AI evaluation engineer',
+  liJobs: 'AI engineer evaluation'
+});
+
+Object.assign(ORIGIN_TRACK, {
+  swe: 'build',
+  qa: 'build',
+  itsupport: 'ops',
+  analyst: 'build',
+  robotics: 'build',
+  techwriter: 'teach'
+});
+
+/* Week-by-week task for the new track, slotted into the existing four weeks. */
+[
+  { mins: 60, text: 'Read one public model card and one eval report end to end. Learn what the field counts as evidence.', link: 'https://huggingface.co', linkLabel: 'Hugging Face model cards' },
+  { mins: 120, text: 'Write 20 test cases that break a free chatbot, and record exactly how each one fails. That file is your work sample.', link: 'https://developers.google.com/machine-learning/crash-course', linkLabel: 'ML Crash Course' },
+  { mins: 150, text: 'Turn those 20 cases into a small public eval repo with a README explaining what you measured and why.',
+    phone: 'Turn those 20 cases into a written eval report and publish it as a LinkedIn article from your phone.' },
+  { mins: 60, text: 'Apply to five roles with "eval", "red team" or "AI engineer" in the title, linking the repo in line one.', li: 'jobs' }
+].forEach((task, i) => { ROADMAP_WEEKS[i].byTrack.build = task; });
