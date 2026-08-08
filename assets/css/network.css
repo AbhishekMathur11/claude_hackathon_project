@@ -1,0 +1,319 @@
+/* =============================================================================
+   C.O.R.E. — THE ASSEMBLY
+   Ally roster cards and the distress beacon (post / reply / delete).
+   Shares .avatar, .ally-name, .ally-code and small.role with scanner.css.
+   ========================================================================== */
+
+/* -----------------------------------------------------------------------------
+   ALLY ROSTER
+--------------------------------------------------------------------------- */
+
+.ally {
+  display: flex;
+  gap: 14px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--magenta);
+  background: var(--sunk);
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.ally-body { flex: 1; min-width: 0; }
+
+.bubble {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 10px 12px;
+  font-size: 13px;
+  margin: 8px 0 0;
+  color: #c7d6da;
+  font-style: italic;
+}
+
+.roster-note {
+  margin: 4px 0 0;
+  font-size: 10px;
+  color: var(--dim);
+  line-height: 1.5;
+}
+
+/* -----------------------------------------------------------------------------
+   BEACON — COMPOSER
+--------------------------------------------------------------------------- */
+
+.beacon-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+#signalCount {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--orange);
+}
+
+#clearBeacon {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--dim);
+  font: inherit;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+#clearBeacon:hover { border-color: var(--red); color: var(--red); }
+
+#signalForm {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#signalForm input {
+  background: var(--sunk);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 10px;
+  font: inherit;
+  font-size: 13px;
+}
+#signalForm input::placeholder { color: var(--dim); }
+#signalName { flex: 1 1 160px; min-width: 140px; }
+#signalMsg  { flex: 3 1 260px; min-width: 200px; }
+#signalForm button {
+  flex: 0 0 auto;
+  background: var(--magenta);
+  color: #fff;
+  border: none;
+  font: inherit;
+  font-weight: 800;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0 18px;
+  cursor: pointer;
+}
+#signalForm button:hover { background: #ff6ba6; }
+
+/* -----------------------------------------------------------------------------
+   BEACON — SIGNAL LIST
+--------------------------------------------------------------------------- */
+
+#signalList { margin-top: 14px; }
+
+.empty {
+  font-size: 12px;
+  color: var(--dim);
+  margin: 0;
+}
+
+.signal {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--orange);
+  background: var(--sunk);
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+
+.signal-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.signal-name { color: #fff; font-size: 13px; }
+.signal-head time {
+  font-size: 9px;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex: 1;
+}
+.signal-del {
+  flex: 0 0 auto;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--dim);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1;
+  width: 24px; height: 24px;
+  cursor: pointer;
+}
+.signal-del:hover { border-color: var(--red); color: var(--red); }
+
+.signal-msg {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #c7d6da;
+  word-break: break-word;
+}
+
+.replies {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0 0 0 12px;
+  border-left: 1px solid var(--line);
+}
+.reply {
+  font-size: 12px;
+  color: #9fb8c0;
+  padding: 6px 0;
+}
+.reply strong { color: var(--green); margin-right: 6px; }
+.reply span { word-break: break-word; }
+.reply time {
+  display: block;
+  font-size: 9px;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.reply-form {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.reply-form input {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 7px 9px;
+  font: inherit;
+  font-size: 12px;
+}
+.reply-form input::placeholder { color: var(--dim); }
+.reply-name { flex: 1 1 100px; min-width: 90px; }
+.reply-msg  { flex: 4 1 200px; min-width: 160px; }
+.reply-form button {
+  flex: 0 0 auto;
+  background: transparent;
+  border: 1px solid var(--green);
+  color: var(--green);
+  font: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0 12px;
+  cursor: pointer;
+}
+.reply-form button:hover { background: var(--green); color: #001217; }
+
+.beacon-note {
+  margin: 14px 0 0;
+  font-size: 10px;
+  color: var(--dim);
+  line-height: 1.6;
+}
+
+/* -----------------------------------------------------------------------------
+   SEARCH BAR  (roster + beacon share this)
+--------------------------------------------------------------------------- */
+
+.li-search {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 14px;
+  border: 1px solid var(--line);
+  background: var(--sunk);
+}
+.li-search input[type="search"] {
+  flex: 3 1 220px;
+  min-width: 180px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 10px;
+  font: inherit;
+  font-size: 13px;
+}
+.li-search input::placeholder { color: var(--dim); }
+.li-search select {
+  flex: 1 1 150px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: #8fb3bd;
+  padding: 10px;
+  font: inherit;
+  font-size: 12px;
+}
+.li-search button {
+  flex: 0 0 auto;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: #8fb3bd;
+  font: inherit;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 9px 14px;
+  cursor: pointer;
+}
+.li-search button:hover { border-color: var(--magenta); color: var(--magenta); }
+.li-search button.on {
+  background: var(--magenta);
+  border-color: var(--magenta);
+  color: #fff;
+}
+.result-count {
+  flex: 0 0 auto;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+  margin-left: auto;
+}
+
+/* -----------------------------------------------------------------------------
+   ROSTER CARD EXTRAS
+--------------------------------------------------------------------------- */
+
+.ally-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.degree {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--dim);
+  border: 1px solid var(--line);
+  padding: 0 5px;
+  border-radius: 2px;
+}
+.ally-meta {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 4px;
+}
+.track-chip {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  padding: 1px 6px;
+}
+.ally-row-actions,
+.signal-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.signal-actions { margin-top: 10px; }
+.ally-row-actions .cta,
+.signal-actions .cta { font-size: 10px; padding: 7px 11px; }
+
+.empty .rm-link { font-size: 10px; }

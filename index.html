@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="C.O.R.E. — say what you do all day, and find the AI-adjacent job that already wants those skills, plus a real person in San Francisco who has already made the jump.">
+<meta name="color-scheme" content="dark light">
+<title>C.O.R.E. — Candidate Origin Recognition Engine</title>
+
+<!-- Inline SVG favicon: keeps the project to zero binary assets. -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='13' fill='none' stroke='%2300f0ff' stroke-width='3'/><circle cx='16' cy='16' r='6' fill='none' stroke='%23ffb627' stroke-width='3'/></svg>">
+
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/scanner.css">
+<link rel="stylesheet" href="assets/css/network.css">
+<link rel="stylesheet" href="assets/css/monday.css">
+
+<!-- Classic deferred scripts, not ES modules: modules are blocked by CORS on
+     file:// URLs, and this page has to work when someone double-clicks it. -->
+<script defer src="assets/js/data.js"></script>
+<script defer src="assets/js/util.js"></script>
+<script defer src="assets/js/scanner.js"></script>
+<script defer src="assets/js/community.js"></script>
+<script defer src="assets/js/monday.js"></script>
+<script defer src="assets/js/app.js"></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="titlewrap">
+    <div class="emblem" aria-hidden="true"></div>
+    <div>
+      <p class="eyebrow">Origin Protocol &middot; Division 7 &middot; San Francisco</p>
+      <h1 class="brand">C.O.R.E.</h1>
+      <p class="brandsub">Candidate Origin Recognition Engine</p>
+      <p class="tagline">
+        Every origin story starts with a day job. Say or type what you already do &mdash;
+        C.O.R.E. finds the AI-adjacent version of you that is hiring <em>this quarter</em>,
+        then puts you in touch with someone who is already there.
+      </p>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="C.O.R.E. sections">
+  <button class="tabbtn active" role="tab" id="tab-scan"
+          data-tab="scan" aria-controls="view-scan" aria-selected="true" tabindex="0">
+    &#9312; Origin Scan
+  </button>
+  <button class="tabbtn c-assembly" role="tab" id="tab-assembly"
+          data-tab="assembly" aria-controls="view-assembly" aria-selected="false" tabindex="-1">
+    &#9313; The Assembly
+  </button>
+  <button class="tabbtn c-monday" role="tab" id="tab-monday"
+          data-tab="monday" aria-controls="view-monday" aria-selected="false" tabindex="-1">
+    &#9314; Monday Briefing
+  </button>
+</nav>
+
+<main>
+
+  <!-- ======================================================================
+       ① ORIGIN SCAN — pillar: transitions
+       ==================================================================== -->
+  <section id="view-scan" class="active" role="tabpanel" aria-labelledby="tab-scan" tabindex="0">
+    <div class="panel">
+      <h2>&gt; Power Signature Scan</h2>
+      <p class="sub">No resume. No account. No forms. Just describe what you do all day.</p>
+
+      <div class="scanner-box">
+        <div class="mic-row">
+          <button type="button" id="micBtn" aria-pressed="false" aria-label="Speak instead of typing">&#127897;</button>
+          <label class="sr-only" for="textInput">Describe what you do all day</label>
+          <input id="textInput" type="text" autocomplete="off"
+                 aria-describedby="micStatus"
+                 placeholder="e.g. I manage a diner, handle angry customers, and do inventory">
+        </div>
+        <p id="micStatus" role="status" aria-live="polite"></p>
+
+        <button type="button" id="scanBtn">&#9654; Run Scan</button>
+
+        <label class="sr-only" for="manualSelect">Or pick a role category</label>
+        <select class="manual" id="manualSelect">
+          <option value="">&mdash; or jump straight to a role category &mdash;</option>
+        </select>
+
+        <div id="scanFeed" role="status" aria-live="polite"></div>
+      </div>
+
+      <div id="results"></div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       ② THE ASSEMBLY — pillar: community
+       ==================================================================== -->
+  <section id="view-assembly" role="tabpanel" aria-labelledby="tab-assembly" tabindex="0" hidden>
+    <div class="panel magenta">
+      <h2>&gt; People Who Already Made The Jump</h2>
+      <p class="sub">
+        Hard-won knowledge moving sideways through a community, instead of getting
+        rediscovered alone at 11pm.
+      </p>
+      <div class="li-search">
+        <label class="sr-only" for="allySearch">Search people, roles or skills</label>
+        <input id="allySearch" type="search" autocomplete="off"
+               placeholder="Search people, roles, skills&hellip;">
+        <label class="sr-only" for="allyTrack">Filter by track</label>
+        <select id="allyTrack">
+          <option value="">All tracks</option>
+        </select>
+        <button type="button" id="allyClear">Clear</button>
+        <span id="allyCount" class="result-count"></span>
+      </div>
+
+      <div id="allies"></div>
+
+      <p class="roster-note">
+        These profiles are illustrative, built from documented transition patterns rather than
+        real individuals &mdash; so <strong>Find on LinkedIn</strong> searches for real people
+        currently in that role, which is more useful anyway. Replace the <code>ALLIES</code>
+        array in <code>assets/js/data.js</code> with your own roster to make them individually
+        linkable.
+      </p>
+    </div>
+
+    <div class="panel magenta">
+      <div class="beacon-head">
+        <div>
+          <h2>&gt; Distress Beacon</h2>
+          <p class="sub" style="margin:0;">Stuck on something? Send up a flare. Anyone can answer.</p>
+        </div>
+        <span id="signalCount">No signals yet</span>
+      </div>
+
+      <form id="signalForm">
+        <label class="sr-only" for="signalName">Your name or handle</label>
+        <input id="signalName" type="text" maxlength="40" autocomplete="nickname"
+               placeholder="Your name or handle">
+        <label class="sr-only" for="signalMsg">What do you need help with?</label>
+        <input id="signalMsg" type="text" maxlength="280" required
+               placeholder="What do you need help with?">
+        <button type="submit">Send Signal</button>
+      </form>
+
+      <div class="li-search" id="signalTools" hidden>
+        <label class="sr-only" for="signalSearch">Search signals</label>
+        <input id="signalSearch" type="search" autocomplete="off"
+               placeholder="Search signals and replies&hellip;">
+        <button type="button" id="signalOpen" aria-pressed="false">Unanswered only</button>
+      </div>
+
+      <div id="signalList"></div>
+
+      <p class="beacon-note">
+        Signals are stored in this browser only &mdash; nothing is uploaded, and nobody else can
+        see them yet. Point <code>loadBeacon()</code> and <code>saveBeacon()</code> in
+        <code>assets/js/community.js</code> at a Supabase or Firebase free-tier table to make the
+        beacon genuinely multi-user.
+        <button type="button" id="clearBeacon" hidden>Clear all signals</button>
+      </p>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       ③ MONDAY BRIEFING — pillar: representation
+       ==================================================================== -->
+  <section id="view-monday" role="tabpanel" aria-labelledby="tab-monday" tabindex="0" hidden>
+    <div class="panel monday">
+      <p class="kicker">For the people not in the room</p>
+      <h2>Build my four-week plan</h2>
+      <p class="lede">
+        Answer four questions. Get a week-by-week plan that fits the time you actually have,
+        with a real free link on every single task. No jargon, no login, no laptop needed.
+      </p>
+
+      <form id="roadmapForm" class="rm-form noprint">
+        <div class="rm-field">
+          <label for="rmOrigin">Right now I work in&hellip;</label>
+          <select id="rmOrigin">
+            <option value="">Something else / prefer not to say</option>
+          </select>
+        </div>
+        <div class="rm-field">
+          <label for="rmTrack">I want to move toward&hellip;</label>
+          <select id="rmTrack"></select>
+        </div>
+        <div class="rm-field">
+          <label for="rmHours">I can spare&hellip;</label>
+          <select id="rmHours">
+            <option value="2">2 hours a week</option>
+            <option value="5">5 hours a week</option>
+            <option value="10">10 hours a week</option>
+          </select>
+        </div>
+        <div class="rm-field">
+          <label for="rmDevice">At home I have&hellip;</label>
+          <select id="rmDevice">
+            <option value="computer">A computer</option>
+            <option value="phone">Only a phone</option>
+          </select>
+        </div>
+        <button type="submit" id="roadmapBtn" class="printbtn">&#9889; Build my plan</button>
+      </form>
+
+      <pre id="roadmapFeed" class="rm-feed noprint" role="status" aria-live="polite" hidden></pre>
+
+      <div id="roadmapOut"></div>
+
+      <div id="roadmapActions" class="rm-actions noprint">
+        <button type="button" class="printbtn" id="printBtn">&#128424; Print it</button>
+        <button type="button" class="cta cta-dark plan-only" id="rmCopy">Copy as text</button>
+        <button type="button" class="cta cta-dark plan-only" id="rmEmail">Email it to me</button>
+        <button type="button" class="cta cta-li plan-only" id="rmJobs">
+          <span class="li-mark" aria-hidden="true">in</span> Jobs on this track
+        </button>
+        <button type="button" class="cta cta-dark ghost-dark plan-only" id="rmReset">Start over</button>
+      </div>
+
+      <p class="footnote">
+        Everything linked here is free and open to anyone, whether or not you have a degree,
+        a work history in tech, or a computer at home. Your ticked boxes are saved in this
+        browser, so the plan is still here next Monday.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  C.O.R.E. &middot; no paid APIs &middot; no accounts &middot; voice recognition runs in your browser
+</footer>
+
+</body>
+</html>

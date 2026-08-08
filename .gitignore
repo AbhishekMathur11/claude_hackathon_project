@@ -1,0 +1,14 @@
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Nothing here is built or installed, but just in case a tool wanders in:
+node_modules/
+dist/
+.cache/
+*.log

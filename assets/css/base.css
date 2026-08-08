@@ -1,0 +1,349 @@
+/* =============================================================================
+   C.O.R.E. — BASE
+   Design tokens, reset, page shell, tabs, and the shared button/panel language.
+   Everything below is plain CSS: no build step, no framework, no web fonts (so
+   the page renders identically offline and on a locked-down machine).
+   ========================================================================== */
+
+:root {
+  /* Surfaces */
+  --bg:      #05070a;
+  --panel:   #0b0f16;
+  --sunk:    #020304;
+  --line:    #1c2b33;
+
+  /* HUD accents */
+  --cyan:    #00f0ff;
+  --green:   #38ff9c;
+  --gold:    #ffb627;
+  --red:     #e23636;
+  --magenta: #ff3d8a;
+  --orange:  #ff8a3d;
+
+  /* Type */
+  --text:    #dfe9ec;
+  --muted:   #7f95a0;
+  --dim:     #5c7078;
+
+  /* Monday Briefing (deliberately a different, plainer world) */
+  --paper:   #f5f0e6;
+  --ink:     #14141f;
+
+  --mono: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --sans: 'Helvetica Neue', Arial, sans-serif;
+  --heavy: 'Arial Black', 'Helvetica Neue', Impact, sans-serif;
+
+  --measure: 820px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* The UA rule for [hidden] is only `display: none`, so any author rule that sets
+   a display (.cta, .li-search, .tabbtn…) silently defeats it. Several controls
+   here are toggled purely with the hidden attribute, so make it stick. Element
+   IDs still outrank this, which is what lets the print stylesheet force
+   #view-monday visible. */
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--mono);
+  line-height: 1.55;
+  -webkit-text-size-adjust: 100%;
+}
+
+h1, h2, h3 { line-height: 1.2; }
+p { margin: 0 0 10px; }
+
+/* CRT scanline wash over the whole HUD. Purely decorative. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 240, 255, 0.025) 0px,
+    rgba(0, 240, 255, 0.025) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* Visible focus everywhere — the default outline disappears against this palette. */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* Screen-reader-only label text. */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* -----------------------------------------------------------------------------
+   HEADER
+--------------------------------------------------------------------------- */
+
+header.top {
+  background: radial-gradient(ellipse at top, #0d1a22 0%, var(--bg) 70%);
+  border-bottom: 2px solid var(--cyan);
+  padding: 22px 20px 20px;
+  box-shadow: inset 0 0 30px rgba(0, 240, 255, 0.15);
+}
+
+.titlewrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+/* Reactor-style emblem: three concentric rings with a slow pulse. */
+.emblem {
+  flex: 0 0 auto;
+  width: 58px; height: 58px;
+  margin-top: 4px;
+  border-radius: 50%;
+  border: 2px solid var(--cyan);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.45), inset 0 0 14px rgba(0, 240, 255, 0.35);
+  animation: reactor 3.2s ease-in-out infinite;
+}
+.emblem::before {
+  content: "";
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 12px rgba(255, 182, 39, 0.6);
+}
+@keyframes reactor {
+  0%, 100% { box-shadow: 0 0 18px rgba(0,240,255,.45), inset 0 0 14px rgba(0,240,255,.35); }
+  50%      { box-shadow: 0 0 30px rgba(0,240,255,.75), inset 0 0 22px rgba(0,240,255,.55); }
+}
+
+.eyebrow {
+  color: var(--green);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.eyebrow::before {
+  content: "\25CF";
+  color: var(--red);
+  animation: pulse 1.4s infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+h1.brand {
+  color: var(--cyan);
+  font-size: clamp(30px, 6vw, 50px);
+  margin: 6px 0 2px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.6), 0 0 40px rgba(0, 240, 255, 0.25);
+}
+
+.brandsub {
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.tagline {
+  color: var(--muted);
+  font-size: 13px;
+  max-width: 60ch;
+  margin: 0;
+}
+.tagline em { color: var(--text); font-style: normal; }
+
+/* -----------------------------------------------------------------------------
+   TABS
+--------------------------------------------------------------------------- */
+
+nav.tabs {
+  max-width: var(--measure);
+  margin: 18px auto 0;
+  padding: 0 20px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tabbtn {
+  flex: 1;
+  min-width: 150px;
+  background: var(--panel);
+  color: #8fb3bd;
+  border: 1px solid var(--line);
+  padding: 11px 12px;
+  font: inherit;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+.tabbtn:hover { color: var(--text); border-color: #2b3f4a; }
+
+.tabbtn.active            { background: #0c2029; color: var(--cyan);    border-color: var(--cyan);    box-shadow: 0 0 12px rgba(0,240,255,.25); }
+.tabbtn.active.c-assembly { color: var(--magenta); border-color: var(--magenta); box-shadow: 0 0 12px rgba(255,61,138,.25); }
+.tabbtn.active.c-monday   { color: var(--gold);    border-color: var(--gold);    box-shadow: 0 0 12px rgba(255,182,39,.25); }
+
+/* -----------------------------------------------------------------------------
+   LAYOUT & PANELS
+--------------------------------------------------------------------------- */
+
+main {
+  max-width: var(--measure);
+  margin: 22px auto 60px;
+  padding: 0 20px;
+}
+
+section[hidden] { display: none; }
+section.active { animation: fadeIn 0.25s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 20px;
+  margin-bottom: 22px;
+}
+.panel h2 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.panel.magenta h2 { color: var(--magenta); }
+.sub {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0 0 14px;
+}
+
+/* -----------------------------------------------------------------------------
+   BUTTON LANGUAGE
+--------------------------------------------------------------------------- */
+
+.cta {
+  display: inline-block;
+  background: var(--cyan);
+  color: #001217;
+  text-decoration: none;
+  border: 1px solid var(--cyan);
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 9px 14px;
+  cursor: pointer;
+}
+.cta:hover { background: var(--green); border-color: var(--green); }
+
+.cta-magenta { background: var(--magenta); border-color: var(--magenta); color: #fff; }
+.cta-magenta:hover { background: #ff6ba6; border-color: #ff6ba6; }
+
+.cta-ghost { background: transparent; color: var(--magenta); border-color: var(--magenta); }
+.cta-ghost:hover { background: rgba(255, 61, 138, 0.12); color: var(--magenta); }
+
+/* -----------------------------------------------------------------------------
+   FOOTER
+--------------------------------------------------------------------------- */
+
+footer {
+  text-align: center;
+  font-size: 10px;
+  color: var(--dim);
+  padding: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* -----------------------------------------------------------------------------
+   REDUCED MOTION
+   Animation is decorative throughout, so it is safe to drop entirely.
+--------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   LINKEDIN BUTTONS
+   Every control that hands the user off to LinkedIn wears the same mark, so it
+   is obvious before you click that you are leaving for a real network.
+--------------------------------------------------------------------------- */
+
+.cta-li {
+  background: #0a66c2;
+  border-color: #0a66c2;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.cta-li:hover { background: #0b7ae0; border-color: #0b7ae0; color: #fff; }
+
+.li-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 15px; height: 15px;
+  background: #fff;
+  color: #0a66c2;
+  font-family: var(--sans);
+  font-weight: 900;
+  font-size: 10px;
+  line-height: 1;
+  border-radius: 2px;
+}
+
+/* Grouped buttons under a card. */
+.card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+/* Inline text link used inside empty states and roadmap tasks. */
+.rm-link {
+  color: var(--cyan);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+.rm-link:hover { color: var(--green); }
